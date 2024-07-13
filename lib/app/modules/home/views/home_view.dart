@@ -11,11 +11,11 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(title: const Text('Quick Weather'), centerTitle: true),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
-            Expanded(flex: 2, child: buildOutputSection(context)),
-            Expanded(flex: 1, child: buildInputSection()),
+            Expanded(flex: 4, child: buildOutputSection(context)),
+            Expanded(flex: 3, child: buildInputSection()),
           ],
         ),
       ),
@@ -61,17 +61,28 @@ class HomeView extends GetView<HomeController> {
 
   Widget buildDataView(BuildContext context, WeatherData? w) {
     final tt = Theme.of(context).textTheme;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          w?.city ?? '',
-          style: tt.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        Text(w?.temp ?? '', style: tt.titleMedium),
-        Text(w?.condition ?? '', style: tt.titleMedium),
-        Image.network(w?.icon ?? ''),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            w?.city ?? '',
+            style: tt.displayLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(w?.temp ?? '', style: tt.displayMedium),
+          ),
+          Text(w?.condition ?? '', style: tt.displaySmall),
+          Image.network(
+            w?.icon ?? '',
+            fit: BoxFit.fill,
+            height: 80,
+            width: 80,
+          ),
+        ],
+      ),
     );
   }
 }
