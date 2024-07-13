@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quick_weather_app/app/modules/home/model/weather_data.dart';
 import 'package:quick_weather_app/app/modules/home/service/weather_exception.dart';
 import 'package:quick_weather_app/app/modules/home/service/weather_service.dart';
 
-class HomeController extends GetxController
-    with StateMixin<Map<String, dynamic>> {
+class HomeController extends GetxController with StateMixin<WeatherData> {
   HomeController(this.repo);
 
   final cityController = TextEditingController(text: 'dhaka');
-  final history = <String, dynamic>{};
+  final history = <String, WeatherData>{};
   final isLoading = false.obs;
   final WeatherService repo;
 
@@ -19,23 +19,24 @@ class HomeController extends GetxController
   }
 
   void searchWeather() async {
-    final city = cityController.text;
+    final city = cityController.text.trim().toLowerCase();
     if (history.containsKey(city)) {
       return change(history[city], status: RxStatus.success());
     }
 
     change(null, status: RxStatus.loading());
-    Map<String, dynamic>? responseData;
     isLoading.value = true;
     String? errMsg;
 
-    if (cityController.text.isEmpty) {
+    if (city.isEmpty) {
       errMsg = 'City name cant be empty';
+    } else if (city.isNumericOnly) {
+      errMsg = 'Invalid city name';
     } else {
       try {
-        final responseData = await repo.fetchWeather(city);
-        change(responseData, status: RxStatus.success());
-        history[city] = responseData;
+        final response = await repo.fetchWeather(city);
+        change(response, status: RxStatus.success());
+        history[city] = response;
         isLoading.value = false;
         return;
       } on CityNotFoundException {
@@ -47,6 +48,6 @@ class HomeController extends GetxController
       }
     }
     isLoading.value = false;
-    change(responseData, status: RxStatus.error(errMsg));
+    change(state, status: RxStatus.error(errMsg));
   }
 }
