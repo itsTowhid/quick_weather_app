@@ -40,7 +40,7 @@ class HomeController extends GetxController with StateMixin<WeatherData> {
         isLoading.value = false;
         return;
       } on CityNotFoundException {
-        errMsg = 'City not found. Please check the city name.';
+        errMsg = 'City not found.\nPlease check the city name.';
       } on WeatherServiceException catch (e) {
         errMsg = e.message;
       } catch (e) {

@@ -22,11 +22,6 @@ class ApiService extends GetxController {
     final hasInternet = await connectivityService.isConnected();
     if (!hasInternet) return Future.error("No internet");
 
-    try {
-      return await _dio.get(path, queryParameters: query);
-    } on DioException catch (e) {
-      debugPrint('ERR: $path : $e');
-      return Future.error("Something Went Wrong!");
-    }
+    return await _dio.get(path, queryParameters: query);
   }
 }
