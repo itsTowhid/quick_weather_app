@@ -7,7 +7,7 @@ import 'package:quick_weather_app/app/modules/home/service/weather_service.dart'
 class HomeController extends GetxController with StateMixin<WeatherData> {
   HomeController(this.repo);
 
-  final cityController = TextEditingController(text: 'dhaka');
+  final cityController = TextEditingController();
   final history = <String, WeatherData>{};
   final isLoading = false.obs;
   final WeatherService repo;
