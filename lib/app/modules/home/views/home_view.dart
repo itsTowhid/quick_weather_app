@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../controllers/home_controller.dart';
+import 'package:quick_weather_app/app/modules/home/controllers/home_controller.dart';
+import 'package:quick_weather_app/app/modules/home/model/weather_data.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -9,74 +9,68 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Quick Weather App'), centerTitle: true),
+      appBar: AppBar(title: const Text('Quick Weather'), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Expanded(
-              flex: 2,
-              child: Center(
-                child: controller.obx(
-                  (state) => buildWeatherDataView(state),
-                  onEmpty: const Text('Enter your city name'),
-                  onError: (error) => Text(
-                    error ?? 'Something went wrong',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextField(
-                    onSubmitted: (_) => controller.searchWeather(),
-                    controller: controller.cityController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'City Name',
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Obx(
-                    () => controller.isLoading.value
-                        ? const CircularProgressIndicator()
-                        : ElevatedButton(
-                            onPressed: controller.searchWeather,
-                            child: const Text('Search'),
-                          ),
-                  ),
-                ],
-              ),
-            ),
+            Expanded(flex: 2, child: buildOutputSection(context)),
+            Expanded(flex: 1, child: buildInputSection()),
           ],
         ),
       ),
     );
   }
 
-  Column buildWeatherDataView(Map<String, dynamic>? state) {
+  Widget buildOutputSection(BuildContext context) {
+    return Center(
+      child: controller.obx(
+        (state) => buildDataView(context, state),
+        onEmpty: const Text('Enter your city name'),
+        onError: (error) => Text(
+          error ?? 'Something went wrong',
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  Widget buildInputSection() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextField(
+          onSubmitted: (_) => controller.searchWeather(),
+          controller: controller.cityController,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'City Name',
+          ),
+        ),
+        const SizedBox(height: 16),
+        Obx(
+          () => ElevatedButton(
+            onPressed:
+                controller.isLoading.value ? null : controller.searchWeather,
+            child: const Text('Search'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildDataView(BuildContext context, WeatherData? w) {
+    final tt = Theme.of(context).textTheme;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          state?['name'],
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          w?.city ?? '',
+          style: tt.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
-        Text(
-          '${(state?['main']['temp'] - 273.15).toStringAsFixed(2)} °C',
-          style: const TextStyle(fontSize: 20),
-        ),
-        Text(
-          state?['weather'][0]['description'],
-          style: const TextStyle(fontSize: 20),
-        ),
-        Image.network(
-          'http://openweathermap.org/img/w/${state?['weather'][0]['icon']}.png',
-        ),
+        Text(w?.temp ?? '', style: tt.titleMedium),
+        Text(w?.condition ?? '', style: tt.titleMedium),
+        Image.network(w?.icon ?? ''),
       ],
     );
   }
