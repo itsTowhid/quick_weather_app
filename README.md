@@ -22,7 +22,7 @@ Quick Weather App is a Flutter application that allows users to fetch and displa
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/your-username/quick_weather_app.git
+   git clone https://github.com/itsTowhid/quick_weather_app.git
    cd quick_weather_app
    ```
    
