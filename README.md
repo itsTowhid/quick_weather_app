@@ -1,16 +1,37 @@
-# quick_weather_app
+# Quick Weather App
 
-A new Flutter project.
+## Description
 
-## Getting Started
+Quick Weather App is a Flutter application that allows users to fetch and display weather data for a specified city using the OpenWeatherMap API. The app demonstrates skills in Flutter development, API integration, state management using GetX, and error handling.
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- Search for a city and display its current weather information.
+- Display the city name, temperature, weather condition, and an icon representing the weather condition.
+- Handle errors such as network issues, invalid city names, and no results found.
+- Check internet connectivity status and display appropriate messages.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Setup and Run
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Prerequisites
+
+- Flutter SDK: [Flutter installation guide](https://flutter.dev/docs/get-started/install)
+- OpenWeatherMap API key: Sign up at [OpenWeatherMap](https://openweathermap.org/) to get an API key.
+
+### Steps
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/quick_weather_app.git
+   cd quick_weather_app
+   ```
+   
+2. **Install dependencies**
+   ```sh
+   flutter pub get
+   ```
+
+3. **Run app**
+   ```sh
+   flutter run
+   ```
