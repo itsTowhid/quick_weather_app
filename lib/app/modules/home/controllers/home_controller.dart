@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quick_weather_app/app/modules/home/model/weather_data.dart';
@@ -9,6 +11,7 @@ class HomeController extends GetxController with StateMixin<WeatherData> {
 
   final cityController = TextEditingController();
   final history = <String, WeatherData>{};
+  final isAnimating = false.obs;
   final isLoading = false.obs;
   final WeatherService repo;
 
@@ -16,6 +19,7 @@ class HomeController extends GetxController with StateMixin<WeatherData> {
   void onInit() {
     super.onInit();
     change(state, status: RxStatus.empty());
+    Future.delayed(const Duration(seconds: 6), playPauseAnim);
   }
 
   void searchWeather() async {
@@ -49,5 +53,29 @@ class HomeController extends GetxController with StateMixin<WeatherData> {
     }
     isLoading.value = false;
     change(state, status: RxStatus.error(errMsg));
+  }
+
+  final locations = ['Bangladesh', 'Indonesia', 'Singapore', 'Dhaka'];
+
+  void playPauseAnim() {
+    isAnimating.value = !isAnimating.value;
+    if (isAnimating.value) _animLoop();
+  }
+
+  void _animLoop() async {
+    cityController.clear();
+    if (!isAnimating.value) return;
+    final txt = locations[Random().nextInt(locations.length)];
+    for (int i = 0; i < txt.length; i++) {
+      if (!isAnimating.value) return;
+      await Future.delayed(
+        const Duration(milliseconds: 99),
+        () => cityController.text = txt.substring(0, i + 1),
+      );
+      if (isAnimating.value && cityController.text == txt) {
+        Future.delayed(const Duration(seconds: 4), _animLoop);
+        Future.delayed(const Duration(seconds: 1), searchWeather);
+      }
+    }
   }
 }

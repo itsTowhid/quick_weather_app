@@ -19,6 +19,15 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
+      floatingActionButton: Obx(
+        () {
+          final animating = controller.isAnimating.value;
+          return FloatingActionButton(
+            onPressed: controller.playPauseAnim,
+            child: Icon(animating ? Icons.pause : Icons.play_arrow),
+          );
+        },
+      ),
     );
   }
 
