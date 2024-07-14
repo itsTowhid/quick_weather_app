@@ -22,14 +22,14 @@ class WeatherService {
             throw CityNotFoundException();
           default:
             throw WeatherServiceException(
-                'Failed to load weather data: ${dioError.response?.statusMessage}');
+                'Failed to load weather data\n${dioError.response?.statusMessage}');
         }
       } else {
         throw WeatherServiceException(
-            'Failed to load weather data: ${dioError.message}');
+            'Failed to load weather data\n${dioError.message}');
       }
     } catch (e) {
-      throw WeatherServiceException('An unexpected error occurred: $e');
+      throw WeatherServiceException('An unexpected error occurred\n$e');
     }
   }
 }

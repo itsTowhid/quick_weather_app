@@ -36,9 +36,19 @@ class HomeView extends GetView<HomeController> {
       child: controller.obx(
         (state) => buildDataView(context, state),
         onEmpty: const Text('Enter your city name'),
-        onError: (error) => Text(
-          error ?? 'Something went wrong',
-          textAlign: TextAlign.center,
+        onError: (error) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.heart_broken_rounded,
+              color: Colors.grey.shade300,
+              size: 100,
+            ),
+            Text(
+              error ?? 'Something went wrong',
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
