@@ -8,7 +8,9 @@ class WeatherData {
       city: json['name'],
       temp: '${(json['main']['temp'] - 273.15).toStringAsFixed(2)} °C',
       condition: json['weather'][0]['description'],
-      icon: 'http://openweathermap.org/img/w/${json['weather'][0]['icon']}.png',
+      icon: json['weather'][0]['icon'],
     );
   }
+
+  String get iconUrl => 'https://openweathermap.org/img/w/$icon.png';
 }

@@ -76,7 +76,7 @@ class HomeView extends GetView<HomeController> {
           ),
           Text(w?.condition ?? '', style: tt.displaySmall),
           Image.network(
-            w?.icon ?? '',
+            w?.iconUrl ?? '',
             fit: BoxFit.fill,
             height: 80,
             width: 80,
