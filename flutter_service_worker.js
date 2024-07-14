@@ -26,12 +26,12 @@ const RESOURCES = {"icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb0489
 "assets/AssetManifest.bin": "e22653ede92eaa0b547b48b0c8b2bc0c",
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
 "assets/AssetManifest.bin.json": "99a97df8255cc1642883bc1b4df3e618",
-"assets/fonts/MaterialIcons-Regular.otf": "0db35ae7a415370b89e807027510caf0",
+"assets/fonts/MaterialIcons-Regular.otf": "47e921687c873e13245a4776240cee75",
 "assets/AssetManifest.json": "e21f0de3e9ae975381dc3c047df17ba2",
 "assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
-"index.html": "d8a7640b5090c60f7fa7a9a7f083bebb",
-"/": "d8a7640b5090c60f7fa7a9a7f083bebb",
-"main.dart.js": "8ba46042b0d33014acd8fe80d1692d1f"};
+"index.html": "27bc17f749eb3c2e8fda211729aea6e2",
+"/": "27bc17f749eb3c2e8fda211729aea6e2",
+"main.dart.js": "6f18ea32b78110c32c7f4652da918e5d"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
