@@ -49,6 +49,7 @@ class HomeView extends GetView<HomeController> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextField(
+          focusNode: controller.focusNode,
           onSubmitted: (_) => controller.searchWeather(),
           controller: controller.cityController,
           decoration: const InputDecoration(

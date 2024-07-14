@@ -14,12 +14,23 @@ class HomeController extends GetxController with StateMixin<WeatherData> {
   final isAnimating = false.obs;
   final isLoading = false.obs;
   final WeatherService repo;
+  final focusNode = FocusNode();
 
   @override
   void onInit() {
     super.onInit();
     change(state, status: RxStatus.empty());
     Future.delayed(const Duration(seconds: 6), playPauseAnim);
+    focusNode.addListener(() {
+      if (focusNode.hasFocus && isAnimating.value) playPauseAnim();
+    });
+  }
+
+  @override
+  void onClose() {
+    focusNode.dispose();
+    if (isAnimating.value) playPauseAnim();
+    cityController.dispose();
   }
 
   void searchWeather() async {
@@ -63,8 +74,8 @@ class HomeController extends GetxController with StateMixin<WeatherData> {
   }
 
   void _animLoop() async {
-    cityController.clear();
     if (!isAnimating.value) return;
+    cityController.clear();
     final txt = locations[Random().nextInt(locations.length)];
     for (int i = 0; i < txt.length; i++) {
       if (!isAnimating.value) return;
