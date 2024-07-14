@@ -89,12 +89,21 @@ class HomeView extends GetView<HomeController> {
           Text(
             w?.city ?? '',
             style: tt.displayLarge?.copyWith(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text(w?.temp ?? '', style: tt.displayMedium),
+            child: Text(
+              w?.temp ?? '',
+              style: tt.displayMedium,
+              textAlign: TextAlign.center,
+            ),
           ),
-          Text(w?.condition ?? '', style: tt.displaySmall),
+          Text(
+            w?.condition ?? '',
+            style: tt.displaySmall,
+            textAlign: TextAlign.center,
+          ),
           Image.network(
             w?.iconUrl ?? '',
             fit: BoxFit.fill,
