@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:quick_weather_app/app/modules/home/controllers/home_controller.dart';
 import 'package:quick_weather_app/app/modules/home/model/weather_data.dart';
 
@@ -58,6 +59,15 @@ class HomeView extends GetView<HomeController> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const SizedBox(height: 16),
+        Obx(() {
+          return Wrap(
+              children: controller.bookmarks
+                  .map((e) => TextButton(
+                onPressed: () => controller.loadBookmark(e),
+                  child: Text(e)))
+                  .toList());
+        }),
         TextField(
           focusNode: controller.focusNode,
           onSubmitted: (_) => controller.searchWeather(),
@@ -95,13 +105,13 @@ class HomeView extends GetView<HomeController> {
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Text(
               w?.temp ?? '',
-              style: tt.displayMedium,
+              // style: tt.displayMedium,
               textAlign: TextAlign.center,
             ),
           ),
           Text(
             w?.condition ?? '',
-            style: tt.displaySmall,
+            // style: tt.displaySmall,
             textAlign: TextAlign.center,
           ),
           Image.network(
@@ -110,6 +120,13 @@ class HomeView extends GetView<HomeController> {
             height: 80,
             width: 80,
           ),
+          Obx(() {
+            final isMarked = controller.bookmarks.contains(w?.city);
+            return IconButton(
+              onPressed: controller.bookmarkIt,
+              icon: Icon(isMarked ? Icons.star : Icons.star_border),
+            );
+          })
         ],
       ),
     );

@@ -89,4 +89,20 @@ class HomeController extends GetxController with StateMixin<WeatherData> {
       }
     }
   }
+
+  final bookmarks = <String>{}.obs;
+
+  void bookmarkIt() {
+    final city = state?.city;
+    if (bookmarks.contains(city)) {
+      bookmarks.remove(city);
+    } else {
+      bookmarks.add(city!);
+    }
+  }
+
+  void loadBookmark(String e) {
+    cityController.text = e;
+    searchWeather();
+  }
 }
